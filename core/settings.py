@@ -34,6 +34,7 @@ MY_APPS = [
 
 SETTINGS_APPS = [
     'rest_framework',
+    'corsheaders',
 ]
 
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = DJANGO_APPS + MY_APPS + SETTINGS_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -153,3 +155,13 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+# If you need to change the resolution of CorsHeaders
+''' 
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://localhost:8080',
+]
+'''
+
+CORS_ORIGIN_ALLOW_ALL = True
