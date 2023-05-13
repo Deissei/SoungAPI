@@ -8,7 +8,7 @@ from apps.soung.views import (
 
 router = DefaultRouter()
 
-router.register('soungs', SoungAPIViewSet)
+router.register('songs', SoungAPIViewSet)
 router.register('albums', AlbumAPIViewSet)
 router.register('playlists', PlaylistAPIViewSet)
 

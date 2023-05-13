@@ -35,6 +35,7 @@ MY_APPS = [
 SETTINGS_APPS = [
     'rest_framework',
     'corsheaders',
+    'drf_yasg',
 ]
 
 
@@ -65,7 +66,9 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'docs'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,9 +120,7 @@ TIME_ZONE = 'Asia/Bishkek'
 USE_I18N = True
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+TERMS_OF_USE_URL = BASE_DIR / 'TERMS_OF_USE.html'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'

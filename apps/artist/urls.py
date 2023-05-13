@@ -5,7 +5,7 @@ from apps.artist.views import ArtistAPIViewSet
 
 router = DefaultRouter()
 
-router.register('artist', ArtistAPIViewSet)
+router.register('', ArtistAPIViewSet)
 
 
 urlpatterns = router.urls
