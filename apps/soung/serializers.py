@@ -5,7 +5,7 @@ from apps.soung.models import (
     Album,
     Playlist
 )
-from apps.artist.serializers import ArtistSerializer, ArtistListSerializer
+from apps.artist.serializers import ArtistSerializer
 from apps.soung.models import Soung
 
 from rest_framework import serializers
@@ -14,13 +14,13 @@ from rest_framework import serializers
 class SoungListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Soung
-        fields = ('title', 'file')
+        fields = ('title', 'file', 'image')
 
 
 class SoungCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Soung
-        fields = ('title', 'artist', 'file')
+        fields = ('title', 'artist', 'file', 'image')
 
 
 class SoungRetrieveSerializer(serializers.ModelSerializer):
@@ -30,6 +30,7 @@ class SoungRetrieveSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'artist',
+            'image',
             'file',
             'url'
         )
@@ -37,7 +38,7 @@ class SoungRetrieveSerializer(serializers.ModelSerializer):
 
 class AlbumListSerializer(serializers.ModelSerializer):
     soungs = SoungListSerializer(many=True)
-    artist = ArtistListSerializer(read_only=True)
+    artist = ArtistSerializer(read_only=True)
 
     class Meta:
         model = Album
@@ -72,4 +73,31 @@ class AlbumCreateUpdateSerializer(serializers.ModelSerializer):
             'description',
             'soungs',
             'artist',
+        )
+
+
+class PlaylistSeralizer(serializers.ModelSerializer):
+    user = serializers.SlugField(read_only=True)
+    soungs = SoungRetrieveSerializer(many=True)
+
+    class Meta:
+        model = Playlist
+        fields = (
+            'id',
+            'user',
+            'title',
+            'soungs'
+        )
+
+
+class PlayCreateUpdatelistSeralizer(serializers.ModelSerializer):
+    user = serializers.SlugField(read_only=True)
+
+    class Meta:
+        model = Playlist
+        fields = (
+            'id',
+            'user',
+            'title',
+            'soungs'
         )

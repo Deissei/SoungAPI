@@ -7,6 +7,8 @@ from apps.soung.models import (
     Playlist
 )
 
+from utils.permissions import IsMyPlaylist
+
 from apps.soung.serializers import (
     SoungCreateUpdateSerializer,
     SoungListSerializer,
@@ -14,7 +16,10 @@ from apps.soung.serializers import (
 
     AlbumCreateUpdateSerializer,
     AlbumListSerializer,
-    AlbumRetrieveSerializer
+    AlbumRetrieveSerializer,
+
+    PlaylistSeralizer,
+    PlayCreateUpdatelistSeralizer
 )
 
 
@@ -44,3 +49,20 @@ class AlbumAPIViewSet(ModelViewSet):
         if self.action == 'retrieve':
             return AlbumRetrieveSerializer
         return AlbumListSerializer
+
+
+class PlaylistAPIViewSet(ModelViewSet):
+    queryset = Playlist.objects.all()
+    permission_classes = [IsMyPlaylist]
+    serializer_class = PlaylistSeralizer
+
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action in ('create', 'update'):
+            return PlayCreateUpdatelistSeralizer
+        return PlaylistSeralizer
+    
+    def get_queryset(self):
+        return Playlist.objects.filter(user=self.request.user)

@@ -7,7 +7,8 @@ from apps.artist.models import Artist
 User = get_user_model()
 
 class Soung(models.Model):
-    title = models.CharField(max_length=256, unique=True)
+    title = models.CharField(max_length=256)
+    image = models.ImageField(upload_to='soung/image/', null=True, blank=True)
     artist = models.ForeignKey(Artist, on_delete=models.SET_DEFAULT, default='None')
     file = models.FileField(upload_to='soung')
 
@@ -16,7 +17,7 @@ class Soung(models.Model):
 
 
 class Album(models.Model):
-    title = models.CharField(max_length=256, unique=True)
+    title = models.CharField(max_length=256)
     description = models.TextField()
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name='artist_album')
     soungs = models.ManyToManyField(Soung, related_name='soungs_album')
@@ -27,8 +28,11 @@ class Album(models.Model):
 
 class Playlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=256, unique=True)
+    title = models.CharField(max_length=256)
     soungs = models.ManyToManyField(Soung, related_name='soungs_playlist')
     
     def __str__(self):
         return self.title
+
+    class Meta:
+        unique_together = ('user', 'title')

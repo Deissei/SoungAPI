@@ -11,6 +11,7 @@ urlpatterns = [
 api_urlpattrens = [
     path('a1/', include('apps.artist.urls')),
     path('a2/', include('apps.soung.urls')),
+    path('a3/', include('apps.users.urls')),
 ]
 
 urlpatterns += api_urlpattrens
