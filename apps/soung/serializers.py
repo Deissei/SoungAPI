@@ -5,6 +5,7 @@ from apps.soung.models import (
     Album,
     Playlist
 )
+from apps.genre.serializers import GenreSerializer
 from apps.artist.serializers import ArtistSerializer
 from apps.soung.models import Soung
 
@@ -20,16 +21,19 @@ class SoungListSerializer(serializers.ModelSerializer):
 class SoungCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Soung
-        fields = ('title', 'artist', 'file', 'image')
+        fields = ('title', 'artist', 'file', 'image', 'genres')
 
 
 class SoungRetrieveSerializer(serializers.ModelSerializer):
+    genres = GenreSerializer(many=True)
+    
     class Meta:
         model = Soung
         fields = (
             'id',
             'title',
             'artist',
+            'genres',
             'image',
             'file',
             'url'

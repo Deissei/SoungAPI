@@ -30,6 +30,7 @@ DJANGO_APPS = [
 MY_APPS = [
     'apps.artist',
     'apps.soung',
+    'apps.genre',
 ]
 
 SETTINGS_APPS = [

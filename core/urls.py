@@ -41,6 +41,7 @@ api_urlpattrens = [
     path('artists/', include('apps.artist.urls')),
     path('', include('apps.soung.urls')),
     path('', include('apps.users.urls')),
+    path('', include('apps.genre.urls')),
 ]
 
 urlpatterns += api_urlpattrens

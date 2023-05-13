@@ -2,13 +2,14 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 from apps.artist.models import Artist
-
+from apps.genre.models import Genre
 
 User = get_user_model()
 
 class Soung(models.Model):
     title = models.CharField(max_length=256)
     image = models.ImageField(upload_to='soung/image/', null=True, blank=True)
+    genres = models.ManyToManyField(Genre, blank=True, related_name='genre_soung')
     artist = models.ForeignKey(Artist, on_delete=models.SET_DEFAULT, default='None')
     file = models.FileField(upload_to='soung')
 
