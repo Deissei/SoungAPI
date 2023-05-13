@@ -7,6 +7,8 @@ from apps.soung.models import (
     Playlist
 )
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 from utils.permissions import IsMyPlaylist
 
 from apps.soung.serializers import (
@@ -26,6 +28,8 @@ from apps.soung.serializers import (
 class SoungAPIViewSet(ModelViewSet):
     queryset = Soung.objects.prefetch_related('artist').all()
     permission_classes = [IsAdminUser]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['genres', 'artist']
 
     def get_serializer_class(self):
         if self.action in ('update', 'create'):
