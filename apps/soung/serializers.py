@@ -1,107 +1,108 @@
-from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializer
-
-from apps.soung.models import (
-    Soung,
-    Album,
-    Playlist
-)
-from apps.genre.serializers import GenreSerializer
-from apps.artist.serializers import ArtistSerializer
-from apps.soung.models import Soung
-
 from rest_framework import serializers
 
-
-class SoungListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Soung
-        fields = ('title', 'file', 'image')
+from apps.artist.serializers import ArtistSerializer
+from apps.genre.serializers import GenreSerializer
+from apps.soung.models import Album, Playlist, Soung
 
 
-class SoungCreateUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Soung
-        fields = ('title', 'artist', 'file', 'image', 'genres')
-
-
-class SoungRetrieveSerializer(serializers.ModelSerializer):
-    genres = GenreSerializer(many=True)
-    
+# Сериалайзер для Песен
+class SoungSerializer(serializers.ModelSerializer):
+    genres = GenreSerializer(many=True, read_only=True)
+    artist = ArtistSerializer(read_only=True)
     class Meta:
         model = Soung
         fields = (
             'id',
             'title',
             'artist',
-            'genres',
             'image',
+            'genres',
             'file',
-            'url'
+        )
+        read_only_fields = (
+            'id',
         )
 
 
-class AlbumListSerializer(serializers.ModelSerializer):
-    soungs = SoungListSerializer(many=True)
-    artist = ArtistSerializer(read_only=True)
-
+# Сериалайзер для Создание Песен 
+class SoungCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Album
+        model = Soung
         fields = (
+            'id',
             'title',
-            'soungs',
             'artist',
+            'image',
+            'genres',
+            'file',
+        )
+        read_only_fields = (
+            'id',
         )
 
 
-class AlbumRetrieveSerializer(serializers.ModelSerializer):
-    soungs = SoungRetrieveSerializer(many=True)
+# Сериалайзер для Альбома
+class AlbumSerializer(serializers.ModelSerializer):
     artist = ArtistSerializer(read_only=True)
-
+    soungs = SoungSerializer(many=True)
     class Meta:
         model = Album
         fields = (
             'id',
             'title',
             'description',
-            'soungs',
             'artist',
-            'url'
+            'soungs',
+        )
+        read_only_fields = (
+            'id',
         )
 
 
+# Сериалайзер для Создание Альбома 
 class AlbumCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Album
         fields = (
+            'id',
             'title',
             'description',
-            'soungs',
             'artist',
+            'soungs',
+        )
+        read_only_fields = (
+            'id',
         )
 
 
-class PlaylistSeralizer(serializers.ModelSerializer):
-    user = serializers.SlugField(read_only=True)
-    soungs = SoungRetrieveSerializer(many=True)
-
+# Сериалайзер для Плейлиста
+class PlaylistSerializer(serializers.ModelSerializer):
+    soungs = SoungSerializer(many=True)
     class Meta:
         model = Playlist
         fields = (
             'id',
-            'user',
             'title',
-            'soungs'
+            'user',
+            'soungs',
+        )
+        read_only_fields = (
+            'id',
+            'user',
         )
 
 
-class PlayCreateUpdatelistSeralizer(serializers.ModelSerializer):
-    user = serializers.SlugField(read_only=True)
-
+# Сериалайзер для Создание Плейлиста 
+class PlaylistCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Playlist
         fields = (
             'id',
-            'user',
             'title',
-            'soungs'
+            'user',
+            'soungs',
+        )
+        read_only_fields = (
+            'id',
+            'user',
         )

@@ -1,72 +1,52 @@
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
-from apps.soung.models import (
-    Soung,
-    Album,
-    Playlist
-)
-
-from django_filters.rest_framework import DjangoFilterBackend
-
+from apps.soung.models import Album, Playlist, Soung
+from apps.soung.serializers import (AlbumCreateUpdateSerializer,
+                                    AlbumSerializer,
+                                    PlaylistCreateUpdateSerializer,
+                                    PlaylistSerializer,
+                                    SoungCreateUpdateSerializer,
+                                    SoungSerializer)
 from utils.permissions import IsMyPlaylist
-
-from apps.soung.serializers import (
-    SoungCreateUpdateSerializer,
-    SoungListSerializer,
-    SoungRetrieveSerializer,
-
-    AlbumCreateUpdateSerializer,
-    AlbumListSerializer,
-    AlbumRetrieveSerializer,
-
-    PlaylistSeralizer,
-    PlayCreateUpdatelistSeralizer
-)
 
 
 class SoungAPIViewSet(ModelViewSet):
     queryset = Soung.objects.prefetch_related('artist').all()
     permission_classes = [IsAdminUser]
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['genres', 'artist']
+    search_fields = ['title']
 
     def get_serializer_class(self):
-        if self.action in ('update', 'create'):
+        if self.action in ('create', 'update'):
             return SoungCreateUpdateSerializer
-        if self.action == 'list':
-            return SoungListSerializer
-        if self.action == 'retrieve':
-            return SoungRetrieveSerializer
-        return SoungListSerializer
-        
+        return SoungSerializer        
+
 
 class AlbumAPIViewSet(ModelViewSet):
     queryset = Album.objects.all()
     permission_classes = [IsAdminUser]
 
     def get_serializer_class(self):
-        if self.action in ('update', 'create'):
+        if self.action in ('create', 'update'):
             return AlbumCreateUpdateSerializer
-        if self.action == 'list':
-            return AlbumListSerializer
-        if self.action == 'retrieve':
-            return AlbumRetrieveSerializer
-        return AlbumListSerializer
+        return AlbumSerializer
 
 
 class PlaylistAPIViewSet(ModelViewSet):
     queryset = Playlist.objects.all()
     permission_classes = [IsMyPlaylist]
-    serializer_class = PlaylistSeralizer
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
 
-    def get_serializer_class(self):
-        if self.action in ('create', 'update'):
-            return PlayCreateUpdatelistSeralizer
-        return PlaylistSeralizer
-    
     def get_queryset(self):
         return Playlist.objects.filter(user=self.request.user)
+    
+    def get_serializer_class(self):
+        if self.action in ('create', 'update'):
+            return PlaylistCreateUpdateSerializer
+        return PlaylistSerializer
