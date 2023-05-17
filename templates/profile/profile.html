@@ -1,0 +1,194 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+	{% include "base/header.html" %}
+
+	{% include "base/player.html" %}
+
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title main__title--page">
+						<h1>Мой Профиль</h1>
+					</div>
+				</div>
+				<!-- end title -->
+			</div>
+
+			<div class="row row--grid">
+				<div class="col-12">
+					<div class="profile">
+						<div class="profile__user">
+							<div class="profile__avatar">
+								<img src="{% static 'img/avatar.svg' %}" alt="">
+							</div>
+							<div class="profile__meta">
+								<h3>{{ request.user.first_name }} {{ request.user.last_name }}</h3>
+								<span>Volna ID: {{ request.user.id }}</span>
+							</div>
+						</div>
+
+						<!-- tabs nav -->
+						<ul class="nav nav-tabs profile__tabs" id="profile__tabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Последние прослушаные</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Плейлисты</a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Настройки</a>
+							</li>
+						</ul>
+						<!-- end tabs nav -->
+
+						<button class="profile__logout" type="button">
+							<span>Sign out</span>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,12a1,1,0,0,0,1,1h7.59l-2.3,2.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l4-4a1,1,0,0,0,.21-.33,1,1,0,0,0,0-.76,1,1,0,0,0-.21-.33l-4-4a1,1,0,1,0-1.42,1.42L12.59,11H5A1,1,0,0,0,4,12ZM17,2H7A3,3,0,0,0,4,5V8A1,1,0,0,0,6,8V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V16a1,1,0,0,0-2,0v3a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V5A3,3,0,0,0,17,2Z"/></svg>
+						</button>
+					</div>
+
+					<!-- content tabs -->
+					<div class="tab-content">
+
+						<div class="tab-pane fade show active" id="tab-1" role="tabpanel">
+							<div class="row row--grid">
+
+								<div class="col-6 col-sm-4 col-lg-2">
+									<div class="album">
+										<div class="album__cover">
+											<img src="{% static 'img/covers/cover1.jpg' %}" alt="">
+											<a href="release.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg></a>
+											<span class="album__stat">
+												<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.71,16.29a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21,1,1,0,0,0-.21.33,1,1,0,0,0,.21,1.09,1.15,1.15,0,0,0,.33.21.94.94,0,0,0,.76,0,1.15,1.15,0,0,0,.33-.21,1,1,0,0,0,.21-1.09A1,1,0,0,0,3.71,16.29ZM7,8H21a1,1,0,0,0,0-2H7A1,1,0,0,0,7,8ZM3.71,11.29a1,1,0,0,0-1.09-.21,1.15,1.15,0,0,0-.33.21,1,1,0,0,0-.21.33.94.94,0,0,0,0,.76,1.15,1.15,0,0,0,.21.33,1.15,1.15,0,0,0,.33.21.94.94,0,0,0,.76,0,1.15,1.15,0,0,0,.33-.21,1.15,1.15,0,0,0,.21-.33.94.94,0,0,0,0-.76A1,1,0,0,0,3.71,11.29ZM21,11H7a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2ZM3.71,6.29a1,1,0,0,0-.33-.21,1,1,0,0,0-1.09.21,1.15,1.15,0,0,0-.21.33.94.94,0,0,0,0,.76,1.15,1.15,0,0,0,.21.33,1.15,1.15,0,0,0,.33.21,1,1,0,0,0,1.09-.21,1.15,1.15,0,0,0,.21-.33.94.94,0,0,0,0-.76A1.15,1.15,0,0,0,3.71,6.29ZM21,16H7a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"/></svg> 22</span>
+												<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,13.18V11A8,8,0,0,0,4,11v2.18A3,3,0,0,0,2,16v2a3,3,0,0,0,3,3H8a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1H6V11a6,6,0,0,1,12,0v2H16a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1h3a3,3,0,0,0,3-3V16A3,3,0,0,0,20,13.18ZM7,15v4H5a1,1,0,0,1-1-1V16a1,1,0,0,1,1-1Zm13,3a1,1,0,0,1-1,1H17V15h2a1,1,0,0,1,1,1Z"/></svg> 19 503</span>
+											</span>
+										</div>
+										<div class="album__title">
+											<h3><a href="release.html">Space Melody</a></h3>
+											<span><a href="artist.html">VIZE</a> & <a href="artist.html">Alan Walker</a> & <a href="artist.html">Leony</a></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="tab-pane fade show" id="tab-3" role="tabpanel">
+							{% for playlist in request.user.user_playlist.all %}
+							<div class="row row--grid" style="border: 1px solid; border-radius: 12px; margin-left: 0px; margin-right: 0px; margin-top: 15px;">
+								<div class="col-6 col-sm-4 col-lg-2" >
+									<div class="album" style="margin-top: 10px; margin-bottom: 10px;">
+										<div class="album__title">
+											<h3><a href="release.html">{{ playlist.title }}</a></h3>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+
+						<div class="tab-pane fade" id="tab-4" role="tabpanel">
+							<div class="row row--grid">
+								<!-- details form -->
+								<div class="col-12 col-lg-6">
+									<form action="#" class="sign__form sign__form--profile">
+										<div class="row">
+											<div class="col-12">
+												<h4 class="sign__title">Детали профиля</h4>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="username">Имя Пользователя</label>
+													<input id="username" type="text" name="username" class="sign__input" placeholder="{{ request.user.username }}">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="email">Электронная почта</label>
+													<input id="email" type="text" name="email" class="sign__input" placeholder="{{ request.user.email }}">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="firstname">Имя</label>
+													<input id="firstname" type="text" name="firstname" class="sign__input" placeholder="{{ request.user.first_name }}">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="lastname">Фамилия</label>
+													<input id="lastname" type="text" name="lastname" class="sign__input" placeholder="{{ request.user.last_name }}">
+												</div>
+											</div>
+
+											<div class="col-12">
+												<button class="sign__btn" type="button">Сохранить</button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<!-- end details form -->
+
+								<!-- password form -->
+								<div class="col-12 col-lg-6">
+									<form action="#" class="sign__form sign__form--profile">
+										<div class="row">
+											<div class="col-12">
+												<h4 class="sign__title">Изменить пароль</h4>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="oldpass">Старый пароль</label>
+													<input id="oldpass" type="password" name="oldpass" class="sign__input">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="newpass">Новый пароль</label>
+													<input id="newpass" type="password" name="newpass" class="sign__input">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6" style="margin-left: 330px;">
+												<div class="sign__group">
+													<label class="sign__label" for="confirmpass">Повторите новый пароль</label>
+													<input id="confirmpass" type="password" name="confirmpass" class="sign__input">
+												</div>
+											</div>
+
+											<div class="col-12">
+												<button class="sign__btn" type="button">Изменить</button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<!-- end password form -->
+							</div>
+						</div>
+					</div>
+					<!-- end content tabs -->
+				</div>
+			</div>	
+		</div>
+	</main>
+	<!-- end main content -->
+
+	{% include "base/footer.html" %}
+
+{% endblock content %}

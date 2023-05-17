@@ -38,13 +38,21 @@ urlpatterns = [
 ]
 
 api_urlpattrens = [
-    path('artists/', include('apps.artist.urls')),
-    path('', include('apps.soung.urls')),
-    path('', include('apps.users.urls')),
-    path('', include('apps.genre.urls')),
+    path('artists/', include('apps.artist.api.urls')),
+    path('api/', include('apps.soung.api.urls')),
+    path('api/', include('apps.users.api.urls')),
+    path('api/', include('apps.genre.api.urls')),
+]
+
+veiws_urlpatterns = [
+    path('', include('apps.views.homepage.urls')),
+    path('', include('apps.views.authorization.urls')),
+    path('', include('apps.views.profileview.urls')),
 ]
 
 urlpatterns += api_urlpattrens
+urlpatterns += veiws_urlpatterns
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

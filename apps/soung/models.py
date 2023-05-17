@@ -28,12 +28,13 @@ class Album(models.Model):
 
 
 class Playlist(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_playlist")
     title = models.CharField(max_length=256)
-    soungs = models.ManyToManyField(Soung, related_name='soungs_playlist')
+    soungs = models.ManyToManyField(Soung, related_name='soungs_playlist', blank=True)
     
     def __str__(self):
         return self.title
 
     class Meta:
         unique_together = ('user', 'title')
+        ordering = ('id', )
