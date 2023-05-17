@@ -5,7 +5,7 @@ MusicAPI - это REST API для управления музыкальными 
 Склонируйте репозиторий на свой локальный компьютер:
 bash
 Copy code
-git clone https://github.com/your-username/MusicAPI.git
+git clone https://github.com/Deissei/SoungAPI.git
 Установите необходимые зависимости с помощью менеджера пакетов:
 Copy code
 npm install
